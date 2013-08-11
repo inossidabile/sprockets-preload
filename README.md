@@ -18,7 +18,7 @@ Imagine that you are riding on Rails and have the following `application.js` whe
 //= include front
 
 // Starting application
-$ -> Front.start()
+$(function(){ Front.start(); });
 ```
 
 Let's make user experience smooth:
@@ -34,7 +34,7 @@ Let's make user experience smooth:
     //= preload front
 
     // Starting application
-    $ -> Front.start()
+    $(function(){ Front.start(); });
     ```
 
 3. Delay initialization to the moment when detached assets are loaded:
@@ -47,7 +47,7 @@ Let's make user experience smooth:
 
     SprocketsPreload.success = function() {
       // Starting application
-      $ -> Front.start()
+      $(function(){ Front.start(); });
     }
     ```
 
@@ -61,7 +61,7 @@ Let's make user experience smooth:
 
     SprocketsPreload.success = function() {
       // Starting application
-      $ -> Front.start()
+      $(function(){ Front.start(); });
     }
 
     SprocketsPreload.progress = function(percent) {
@@ -82,7 +82,7 @@ Let's make user experience smooth:
 
     SprocketsPreload.success = function() {
       // Starting application
-      $ -> Front.start()
+      $(function(){ Front.start(); });
     }
 
     SprocketsPreload.progress = function(percent) {
@@ -115,7 +115,7 @@ SprocketsPreload.localStorage = false;
 
 SprocketsPreload.success = function() {
   // Starting application
-  $ -> Front.start()
+  $(function(){ Front.start(); });
 }
 
 SprocketsPreload.progress = function(percent) {
