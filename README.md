@@ -127,10 +127,10 @@ SprocketsPreload.progress = function(percent) {
 
 **Sprockets::Preload** does not depend on Rails. However it has proper rail-ties and is fully-functional on Rails out of box. If you want to use it outside of Rails with clean **Sprockets** – see `lib/sprockets/preload/engine.rb` for required initialization settings.
 
-## Contributing
+## Maintainers
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+* Boris Staal, [@inossidabile](http://staal.io)
+
+## License
+
+It is free software, and may be redistributed under the terms of MIT license.
