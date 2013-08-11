@@ -28,7 +28,7 @@ module Sprockets
           if pathname.to_s == self.file
             next
           elsif context.asset_requirable?(pathname)
-            process_preload_directive(context.environment.attributes_for(pathname).logical_path)
+            process_preload_directive(context.environment.attributes_for(pathname).logical_path, false)
           end
         end
       end
