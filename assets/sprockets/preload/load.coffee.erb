@@ -1,0 +1,121 @@
+#= depend_on_asset sprockets/preload/assets
+
+@SprocketsPreload =
+
+  onload: (callback) ->
+    @localStorage = true unless @localStorage?
+
+    return callback() if document && document.readyState is "complete"
+    
+    if window.addEventListener
+      window.addEventListener "DOMContentLoaded", callback, false
+    else
+      window.attachEvent "onload", handler if window.attachEvent
+
+  #
+  # Dispatches events through `document`
+  #
+  trigger: (name, data) ->
+    if document.createEvent
+      event = document.createEvent('Events')
+      event.data = data if data
+      event.initEvent name, true, true
+      document.dispatchEvent event
+    else if document.createEventObject
+      event = document.createEventObject()
+      event.data = data if data
+      document.fireEvent "on" + name, event
+
+  #
+  # Happens from time to time during downloading (but only when localStorage caching enabled)
+  #
+  triggerProgress: (percent) ->
+    @progress? percent
+    @trigger 'sprockets:progress', percent: percent
+
+  #
+  # Happens when preloading assets are loaded
+  #
+  triggerSuccess: ->
+    @success?()
+    @trigger 'sprockets:loaded'
+
+  #
+  # Creates `script` tag with given attributes and adds it to head
+  #
+  inject: (attributes={}) ->
+    node = document.createElement "script"
+    node[k] = v for k, v of attributes
+    document.getElementsByTagName("head")[0].appendChild node
+
+  #
+  # Loads asset using localStorage as a manual cache
+  #
+  loadCached: (url, version, size) ->
+    attempt = localStorage['sprockets-preload']
+    attempt = JSON.parse(attempt) if attempt
+
+    if attempt?.version == version
+      @inject defer: true, text: attempt.source
+      @triggerProgress 100
+      @triggerSuccess 100
+    else
+      xhr = @_ajax 'GET', url, (xhr) =>
+        clearInterval poller
+        localStorage['sprockets-preload'] = JSON.stringify
+          version: version
+          source: xhr.responseText
+
+        @inject defer: true, text: xhr.responseText
+        @triggerProgress 100
+        @triggerSuccess()
+
+      if size > 0
+        poller = setInterval (=>
+          @triggerProgress Math.round(xhr.responseText.length / size * 100 * 100) / 100
+        ), 100
+
+  #
+  # Loads asset using built-in browser caching
+  #
+  loadSimple: (url) ->
+    script = document.createElement "script"
+    done   = false
+    self   = @
+
+    proceed = ->
+      if !done && (!@readyState? || @readyState == "loaded" || @readyState == "complete")
+        done = true; script.onload = script.onreadystatechange = null
+        self.triggerSuccess()
+
+    @inject src: url, onload: proceed, onreadystatechange: proceed
+
+  #
+  # Starring custom XHR wrapper
+  #
+  _ajax: (method, url, callback) ->
+    if window.XMLHttpRequest
+      xhr = new XMLHttpRequest
+    else
+      xhr = new ActiveXObject 'Microsoft.XMLHTTP'
+
+    xhr.onreadystatechange = -> callback?(xhr) if xhr.readyState > 3
+    xhr.open method, url, 1
+    xhr.send()
+
+    xhr
+
+@SprocketsPreload.onload ->
+  if SprocketsPreload.inline
+    delete localStorage['sprockets-preload'] if window.localStorage?
+    SprocketsPreload.triggerProgress 100
+    SprocketsPreload.triggerSuccess()
+  else if SprocketsPreload.localStorage && window.localStorage
+    SprocketsPreload.loadCached(
+      <%= javascript_path('sprockets/preload/assets').to_json %>,
+      <%= Sprockets::Preload.environment['sprockets/preload/assets'].digest.to_json %>,
+      <%= Sprockets::Preload.environment['sprockets/preload/assets'].length.to_json %>
+    )
+  else
+    delete localStorage['sprockets-preload'] if window.localStorage?
+    SprocketsPreload.loadSimple(<%= javascript_path('sprockets/preload/assets').to_json %>)

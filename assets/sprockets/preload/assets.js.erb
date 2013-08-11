@@ -1,0 +1,10 @@
+<%
+
+# we have to check all base-level assets to find out what exactly is preloading 
+Sprockets::Preload.each_logical_path do |logical_path, environment|
+  Sprockets::Preload.collect(environment, logical_path).each do |dependency|
+    require_asset dependency
+  end
+end
+
+%>
