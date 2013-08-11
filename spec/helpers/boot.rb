@@ -33,7 +33,7 @@ shared_context "inlined", inline: true do
   end
 end
 
-shared_context "detouched", inline: false do
+shared_context "detached", inline: false do
   before(:all) do
     @inline_condition = Sprockets::Preload.inline
     Sprockets::Preload.inline = false

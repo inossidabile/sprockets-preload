@@ -25,7 +25,7 @@ Let's make user experience smooth:
 
 1. Add `sprockets-preload` to your `Gemfile` and run `bundle install`
 
-2. Change `//= include` to `//= preload` for the assets you want to detouch:
+2. Change `//= include` to `//= preload` for the assets you want to detach:
 
     ```javascript
     //= include helpers
@@ -37,7 +37,7 @@ Let's make user experience smooth:
     $ -> Front.start()
     ```
 
-3. Delay initialization to the moment when detouched assets are loaded:
+3. Delay initialization to the moment when detached assets are loaded:
 
     ```javascript
     //= include helpers
@@ -71,7 +71,7 @@ Let's make user experience smooth:
     }
     ```
 
-5. **IMPORTANT**: Rails development environment uses stub to ease debugging. Thus while things keep working, assets don't really get detouched. To force production-grade loading (just to make sure things work fine) add `//= preload!` to your manifest:
+5. **IMPORTANT**: Rails development environment uses stub to ease debugging. Thus while things keep working, assets don't really get detached. To force production-grade loading (just to make sure things work fine) add `//= preload!` to your manifest:
 
     ```javascript
     //= preload!
@@ -129,7 +129,7 @@ SprocketsPreload.progress = function(percent) {
 
 ## History
 
-**Sprockets::Preload** is a mutated fork of [Joosy](http://joosy.ws) 1.x branch preloaders. For Node.js-based applications please refer to [Loada](github.com/inossidabile/loada).
+**Sprockets::Preload** is a mutated fork of [Joosy](http://joosy.ws) 1.x preloaders. For Node.js-based applications please refer to [Loada](https://github.com/inossidabile/loada).
 
 ## Maintainers
 

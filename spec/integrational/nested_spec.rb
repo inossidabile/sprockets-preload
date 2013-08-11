@@ -9,7 +9,7 @@ describe "Nested dependency" do
     Sprockets::Preload.precompiles -= ["nested/nested.js"]
   end
 
-  it "serves detouched" do
+  it "serves detached" do
     Sprockets::Preload.environment['sprockets/preload/assets'].source.should == "test2\n;\n\n"
   end
 
@@ -20,7 +20,7 @@ describe "Nested dependency" do
     end
   end
 
-  context "detouched", inline: false do
+  context "detached", inline: false do
     it "keeps inlines" do
       Sprockets::Preload.environment['nested/nested'].source.should include("test1")
       Sprockets::Preload.environment['nested/nested'].source.should_not include("test2")
