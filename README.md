@@ -127,6 +127,10 @@ SprocketsPreload.progress = function(percent) {
 
 **Sprockets::Preload** does not depend on Rails. However it has proper rail-ties and is fully-functional on Rails out of box. If you want to use it outside of Rails with clean **Sprockets** – see `lib/sprockets/preload/engine.rb` for required initialization settings.
 
+## History
+
+**Sprockets::Preload** is a mutated fork of [Joosy](http://joosy.ws) 1.x branch preloaders. For Node.js-based applications please refer to [Loada](github.com/inossidabile/loada).
+
 ## Maintainers
 
 * Boris Staal, [@inossidabile](http://staal.io)
