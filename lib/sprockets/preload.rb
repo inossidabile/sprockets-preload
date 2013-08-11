@@ -12,7 +12,11 @@ Sprockets.append_path File.expand_path('../../../assets', __FILE__)
 
 # Pass in current environment condition to mark if loading should be stubbed
 Sprockets.register_postprocessor 'application/javascript', :preload do |context, data|
-  data << "SprocketsPreload.inline = true;" unless context.preload?
+  if context._assets_to_preload
+    data << "SprocketsPreload.inline = true;" unless context.preload?
+  end
+
+  data
 end
 
 module Sprockets

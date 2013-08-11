@@ -8,6 +8,8 @@ module Sprockets
         Sprockets::Preload.inline      = ::Rails.env.development?
         Sprockets::Preload.environment = app.assets
         Sprockets::Preload.precompiles = app.config.assets.precompile
+
+        app.config.assets.precompile += ['sprockets/preload/assets.js', 'sprockets/preload/load.js']
       end
     end
   end
