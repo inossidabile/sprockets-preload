@@ -9,7 +9,7 @@ module Sprockets
         Sprockets::Preload.environment = app.assets
         Sprockets::Preload.precompiles = app.config.assets.precompile
 
-        app.config.assets.precompile += ['sprockets/preload/assets.js', 'sprockets/preload/load.js']
+        app.config.assets.precompile += ['sprockets/preload/assets', 'sprockets/preload/load']
       end
     end
   end

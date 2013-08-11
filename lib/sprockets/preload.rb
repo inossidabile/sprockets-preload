@@ -1,3 +1,4 @@
+require 'active_support/all'
 require 'sprockets'
 require 'sprockets/preload/directive_processor'
 require 'sprockets/preload/context'
@@ -25,6 +26,17 @@ module Sprockets
       attr_accessor :inline
       attr_accessor :environment
       attr_accessor :precompiles
+    end
+
+    #
+    # Forks circular calls protection to allow cross-tree assets interactions
+    #
+    def self.[](path)
+      calls = Thread.current[:sprockets_circular_calls]
+      Thread.current[:sprockets_circular_calls] = Set.new
+      environment[path]
+    ensure
+      Thread.current[:sprockets_circular_calls] = calls
     end
 
     #

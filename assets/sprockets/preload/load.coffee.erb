@@ -113,8 +113,8 @@
   else if SprocketsPreload.localStorage && window.localStorage
     SprocketsPreload.loadCached(
       <%= javascript_path('sprockets/preload/assets').to_json %>,
-      <%= Sprockets::Preload.environment['sprockets/preload/assets'].digest.to_json %>,
-      <%= Sprockets::Preload.environment['sprockets/preload/assets'].length.to_json %>
+      <%= Sprockets::Preload['sprockets/preload/assets'].digest.to_json %>,
+      <%= Sprockets::Preload['sprockets/preload/assets'].length.to_json %>
     )
   else
     delete localStorage['sprockets-preload'] if window.localStorage?

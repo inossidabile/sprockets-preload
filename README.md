@@ -48,7 +48,7 @@ Let's make user experience smooth:
     }
     ```
 
-4. Track loading progress and show progress to user
+4. Track loading and show progress to user
 
     ```javascript
     //= include helpers
