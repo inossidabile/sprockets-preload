@@ -1,6 +1,6 @@
 require 'helpers/boot'
 
-describe "Direct dependency" do
+describe "Forced dependency" do
   before(:all) do
     Sprockets::Preload.precompiles += ["forced/forced.js"]
   end

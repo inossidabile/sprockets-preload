@@ -94,6 +94,10 @@ Let's make user experience smooth:
 
     Make sure to remove `//= preload!` when your tests are done.
 
+-----------
+
+By the way, there's also `//= preload_tree` directive that works similar to `//= require_tree`.
+
 ## Caching options
 
 To make loading progress tracking smooth and cache manually controllable, **Sprockets::Preload** uses `localStorage` to cache assets (it falls back to default browser cache automatically). **Sprockets** provides digests and logic-aware dependency system that work much better and much more predictable than more common default HTTP caching.
