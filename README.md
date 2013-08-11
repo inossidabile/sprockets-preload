@@ -1,24 +1,128 @@
 # Sprockets::Preload
 
-TODO: Write a gem description
+Ever had heavy Javascript assets that were taking a while to download? **Sprockets::Preload** allows you to preload it using only the directives of **Sprockets**.
 
-## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'sprockets-preload'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install sprockets-preload
+Show your users nice loading bar instead of just white loading screen!
 
 ## Usage
 
-TODO: Write usage instructions here
+Imagine that you are riding on Rails and have the following `application.js` where `jquery`, `jquery-ui` and `front` (MVC front-end application) take around 500kb compressed altogether:
+
+```javascript
+//= include helpers
+//= include jquery
+//= include jquery-ui
+//= include front
+
+// Starting application
+$ -> Front.start()
+```
+
+Let's make user experience smooth:
+
+1. Add `sprockets-preload` to your `Gemfile` and run `bundle install`
+
+2. Change `//= include` to `//= preload` for the assets you want to detouch:
+
+    ```javascript
+    //= include helpers
+    //= preload jquery
+    //= preload jquery-ui
+    //= preload front
+
+    // Starting application
+    $ -> Front.start()
+    ```
+
+3. Delay initialization to the moment when detouched assets are loaded:
+
+    ```javascript
+    //= include helpers
+    //= preload jquery
+    //= preload jquery-ui
+    //= preload front
+
+    SprocketsPreload.success = function() {
+      // Starting application
+      $ -> Front.start()
+    }
+    ```
+
+4. Track loading progress and show progress to user
+
+    ```javascript
+    //= include helpers
+    //= preload jquery
+    //= preload jquery-ui
+    //= preload front
+
+    SprocketsPreload.success = function() {
+      // Starting application
+      $ -> Front.start()
+    }
+
+    SprocketsPreload.progress = function(percent) {
+      // User isn't going to see percents at console
+      // but that's just an example after all
+      console.log(percent);
+    }
+    ```
+
+5. **IMPORTANT**: Rails development environment uses stub to ease debugging. Thus while things keep working, assets don't really get detouched. To force production-grade loading (just to make sure things work fine) add `//= preload!` to your manifest:
+
+    ```javascript
+    //= preload!
+    //= include helpers
+    //= preload jquery
+    //= preload jquery-ui
+    //= preload front
+
+    SprocketsPreload.success = function() {
+      // Starting application
+      $ -> Front.start()
+    }
+
+    SprocketsPreload.progress = function(percent) {
+      // User isn't going to see percents at console
+      // but that's just an example after all
+      console.log(percent);
+    }
+    ```
+
+    Make sure to remove `//= preload!` when your tests are done.
+
+## Caching options
+
+To make loading progress tracking smooth and cache manually controllable, **Sprockets::Preload** uses `localStorage` to cache assets (it falls back to default browser cache automatically). **Sprockets** provides digests and logic-aware dependency system that work much better and much more predictable than more common default HTTP caching.
+
+That's said – you really want to keep `localStorage` strategy in the vast majority of cases. If however for some reason you still want to make it use default browser cache, set `SprocketsPreload.localStorage` to `false` like this:
+
+```javascript
+//= preload!
+//= include helpers
+//= preload jquery
+//= preload jquery-ui
+//= preload front
+
+SprocketsPreload.localStorage = false;
+
+SprocketsPreload.success = function() {
+  // Starting application
+  $ -> Front.start()
+}
+
+SprocketsPreload.progress = function(percent) {
+  // User isn't going to see percents at console
+  // but that's just an example after all
+  console.log(percent);
+}
+```
+
+**Note** that default caching strategy will still try to emulate loading progress tracking but it works MUCH worse.
+
+## Compatibility
+
+**Sprockets::Preload** does not depend on Rails. However it has proper rail-ties and is fully-functional on Rails out of box. If you want to use it outside of Rails with clean **Sprockets** – see `lib/sprockets/preload/engine.rb` for required initialization settings.
 
 ## Contributing
 
