@@ -33,8 +33,10 @@ Let's make user experience smooth:
     //= preload jquery-ui
     //= preload front
 
-    // Starting application
-    $(function(){ Front.start(); });
+    $(function(){
+      // Starting application
+      Front.start();
+    });
     ```
 
 3. Delay initialization to the moment when detached assets are loaded:
@@ -47,7 +49,7 @@ Let's make user experience smooth:
 
     SprocketsPreload.success = function() {
       // Starting application
-      $(function(){ Front.start(); });
+      Front.start();
     }
     ```
 
@@ -61,7 +63,7 @@ Let's make user experience smooth:
 
     SprocketsPreload.success = function() {
       // Starting application
-      $(function(){ Front.start(); });
+      Front.start();
     }
 
     SprocketsPreload.progress = function(percent) {
@@ -82,7 +84,7 @@ Let's make user experience smooth:
 
     SprocketsPreload.success = function() {
       // Starting application
-      $(function(){ Front.start(); });
+      Front.start();
     }
 
     SprocketsPreload.progress = function(percent) {
@@ -115,7 +117,7 @@ SprocketsPreload.localStorage = false;
 
 SprocketsPreload.success = function() {
   // Starting application
-  $(function(){ Front.start(); });
+  Front.start();
 }
 
 SprocketsPreload.progress = function(percent) {
