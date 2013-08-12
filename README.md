@@ -17,8 +17,10 @@ Imagine that you are riding on Rails and have the following `application.js` whe
 //= include jquery-ui
 //= include front
 
-// Starting application
-$(function(){ Front.start(); });
+$(function(){
+  // Starting application
+  Front.start();
+});
 ```
 
 Let's make user experience smooth:
