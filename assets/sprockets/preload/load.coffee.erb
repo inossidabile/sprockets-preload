@@ -52,8 +52,11 @@
   # Loads asset using localStorage as a manual cache
   #
   loadCached: (url, version, size) ->
-    attempt = localStorage['sprockets-preload']
-    attempt = JSON.parse(attempt) if attempt
+    try
+      attempt = localStorage['sprockets-preload']
+      attempt = JSON.parse(attempt) if attempt
+    catch
+      delete localStorage['sprockets-preload']
 
     if attempt?.version == version
       @inject defer: true, text: attempt.source
