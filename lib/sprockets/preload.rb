@@ -71,11 +71,15 @@ module Sprockets
       end
 
       # Going deeper
-      dependencies = context._required_paths.map do |dependency|
+      dependencies = context._required_paths.select do |dependency|
+        dependency != pathname.to_s
+      end
+
+      dependencies.map! do |dependency|
         environment.attributes_for(dependency).logical_path
       end
 
-      dependencies -= context._stubbed_assets.to_a
+      dependencies -= context._stubbed_assets.to_a + [pathname.to_s]
 
       dependencies.each do |dependency|
         to_preload += collect(environment, dependency)
