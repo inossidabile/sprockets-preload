@@ -1,3 +1,4 @@
+require 'json'
 require 'sprockets'
 require 'sprockets/preload/directive_processor'
 require 'sprockets/preload/context'

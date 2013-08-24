@@ -55,7 +55,7 @@
     try
       attempt = localStorage['sprockets-preload']
       attempt = JSON.parse(attempt) if attempt
-    catch
+    catch e
       delete localStorage['sprockets-preload']
 
     if attempt?.version == version
@@ -115,10 +115,10 @@
     SprocketsPreload.triggerSuccess()
   else if SprocketsPreload.localStorage && window.localStorage
     SprocketsPreload.loadCached(
-      "<%= asset_path('sprockets/preload/assets').gsub('"', '\\"') %>",
-      "<%= Sprockets::Preload['sprockets/preload/assets'].digest %>",
+      <%= JSON.generate asset_path('sprockets/preload/assets'), quirks_mode: true %>,
+      <%= JSON.generate Sprockets::Preload['sprockets/preload/assets'].digest, quirks_mode: true %>,
       <%= Sprockets::Preload['sprockets/preload/assets'].length %>
     )
   else
     delete localStorage['sprockets-preload'] if window.localStorage?
-    SprocketsPreload.loadSimple("<%= asset_path('sprockets/preload/assets').gsub('"', '\\"') %>")
+    SprocketsPreload.loadSimple(<%= JSON.generate asset_path('sprockets/preload/assets'), quirks_mode: true %>)

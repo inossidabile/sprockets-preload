@@ -3,9 +3,11 @@
 source "https://rubygems.org"
 
 gem "pry"
+gem "pry-stack_explorer"
 gem "rake"
 gem "rspec"
 gem "appraisal"
+gem "execjs", "< 2"
 gem "sprockets", "2.2.2"
 
 gemspec :path=>"../"
