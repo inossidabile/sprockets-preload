@@ -115,10 +115,10 @@
     SprocketsPreload.triggerSuccess()
   else if SprocketsPreload.localStorage && window.localStorage
     SprocketsPreload.loadCached(
-      <%= asset_path('sprockets/preload/assets').to_json %>,
-      <%= Sprockets::Preload['sprockets/preload/assets'].digest.to_json %>,
-      <%= Sprockets::Preload['sprockets/preload/assets'].length.to_json %>
+      <%= JSON.generate(asset_path('sprockets/preload/assets'), quirks_mode: true) %>,
+      <%= JSON.generate(Sprockets::Preload['sprockets/preload/assets'].digest, quirks_mode: true) %>,
+      <%= JSON.generate(Sprockets::Preload['sprockets/preload/assets'].length, quirks_mode: true) %>
     )
   else
     delete localStorage['sprockets-preload'] if window.localStorage?
-    SprocketsPreload.loadSimple(<%= asset_path('sprockets/preload/assets').to_json %>)
+    SprocketsPreload.loadSimple(<%= JSON.generate(asset_path('sprockets/preload/assets'), quirks_mode: true) %>)
