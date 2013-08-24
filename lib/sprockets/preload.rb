@@ -9,16 +9,7 @@ require 'sprockets/preload/engine' if defined?(Rails)
 Sprockets::DirectiveProcessor.send :include, Sprockets::Preload::DirectiveProcessor
 Sprockets::Context.send :include, Sprockets::Preload::Context
 
-Sprockets.append_path File.expand_path('../../../assets', __FILE__)
 
-# Pass in current environment condition to mark if loading should be stubbed
-Sprockets.register_postprocessor 'application/javascript', :preload do |context, data|
-  if context._assets_to_preload
-    data << "SprocketsPreload.inline = true;" unless context.preload?
-  end
-
-  data
-end
 
 module Sprockets
   module Preload
@@ -26,6 +17,19 @@ module Sprockets
       attr_accessor :inline
       attr_accessor :environment
       attr_accessor :precompiles
+    end
+
+    def self.setup_sprockets(receiver)
+      receiver.append_path File.expand_path('../../../assets', __FILE__)
+
+      # Pass in current environment condition to mark if loading should be stubbed
+      receiver.register_postprocessor 'application/javascript', :preload do |context, data|
+        if context._assets_to_preload
+          data << "SprocketsPreload.inline = true;" unless context.preload?
+        end
+
+        data
+      end
     end
 
     #
@@ -89,3 +93,5 @@ module Sprockets
     end
   end
 end
+
+Sprockets::Preload.setup_sprockets(Sprockets) if Sprockets.respond_to? :append_path
