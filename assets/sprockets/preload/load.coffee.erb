@@ -115,10 +115,10 @@
     SprocketsPreload.triggerSuccess()
   else if SprocketsPreload.localStorage && window.localStorage
     SprocketsPreload.loadCached(
-      <%= ActiveSupport::JSON::Encoding.escape asset_path('sprockets/preload/assets') %>,
-      <%= ActiveSupport::JSON::Encoding.escape Sprockets::Preload['sprockets/preload/assets'].digest %>,
-      <%= ActiveSupport::JSON::Encoding.escape Sprockets::Preload['sprockets/preload/assets'].length.to_s %>
+      "<%= asset_path('sprockets/preload/assets').gsub('"', '\\"') %>",
+      "<%= Sprockets::Preload['sprockets/preload/assets'].digest %>",
+      <%= Sprockets::Preload['sprockets/preload/assets'].length %>
     )
   else
     delete localStorage['sprockets-preload'] if window.localStorage?
-    SprocketsPreload.loadSimple(<%= ActiveSupport::JSON::Encoding.escape asset_path('sprockets/preload/assets') %>)
+    SprocketsPreload.loadSimple("<%= asset_path('sprockets/preload/assets').gsub('"', '\\"') %>")
