@@ -3,7 +3,6 @@
 [![Gem Version](https://badge.fury.io/rb/sprockets-preload.png)](http://badge.fury.io/rb/sprockets-preload)
 [![Build Status](https://travis-ci.org/inossidabile/sprockets-preload.png?branch=master)](https://travis-ci.org/inossidabile/sprockets-preload)
 [![Code Climate](https://codeclimate.com/github/inossidabile/sprockets-preload.png)](https://codeclimate.com/github/inossidabile/sprockets-preload)
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/inossidabile/sprockets-preload/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 Ever had heavy Javascript assets that were taking a while to download? **Sprockets::Preload** allows you to preload it using only the directives of **Sprockets**.
 
@@ -148,3 +147,5 @@ SprocketsPreload.progress = function(percent) {
 ## License
 
 It is free software, and may be redistributed under the terms of MIT license.
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/inossidabile/grunt-ftpush/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
