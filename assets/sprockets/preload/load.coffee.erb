@@ -10,7 +10,7 @@
     if window.addEventListener
       window.addEventListener "DOMContentLoaded", callback, false
     else
-      window.attachEvent "onload", handler if window.attachEvent
+      window.attachEvent "onload", callback if window.attachEvent
 
   #
   # Dispatches events through `document`
