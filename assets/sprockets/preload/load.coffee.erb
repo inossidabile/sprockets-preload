@@ -9,8 +9,9 @@
     
     if window.addEventListener
       window.addEventListener "DOMContentLoaded", callback, false
-    else
-      window.attachEvent "onload", handler if window.attachEvent
+    else if window.attachEvent
+      document.documentElement.attachEvent "onpropertychange", (event) ->
+        callback() if event.propertyName is "fakeEvents"
 
   #
   # Dispatches events through `document`
@@ -21,6 +22,8 @@
       event.data = data if data
       event.initEvent name, true, true
       document.dispatchEvent event
+    else if window.attachEvent
+      document.documentElement.fakeEvents++;
     else if document.createEventObject
       event = document.createEventObject()
       event.data = data if data
