@@ -110,7 +110,7 @@
 
 @SprocketsPreload.onload ->
   if SprocketsPreload.inline
-    delete localStorage['sprockets-preload'] if window.localStorage?
+    delete localStorage['sprockets-preload'] if window.localStorage? && localStorage['sprockets-preload']
     SprocketsPreload.triggerProgress 100
     SprocketsPreload.triggerSuccess()
   else if SprocketsPreload.localStorage && window.localStorage
