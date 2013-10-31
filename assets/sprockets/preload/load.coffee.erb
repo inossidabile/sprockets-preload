@@ -24,7 +24,8 @@
     else if document.createEventObject
       event = document.createEventObject()
       event.data = data if data
-      document.fireEvent "on" + name, event
+      try
+        document.fireEvent "on" + name, event
 
   #
   # Happens from time to time during downloading (but only when localStorage caching enabled)
