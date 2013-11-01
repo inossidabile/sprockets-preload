@@ -9,9 +9,8 @@
     
     if window.addEventListener
       window.addEventListener "DOMContentLoaded", callback, false
-    else if window.attachEvent
-      document.documentElement.attachEvent "onpropertychange", (event) ->
-        callback() if event.propertyName is "fakeEvents"
+    else
+      window.attachEvent "onload", callback if window.attachEvent
 
   #
   # Dispatches events through `document`
@@ -22,12 +21,11 @@
       event.data = data if data
       event.initEvent name, true, true
       document.dispatchEvent event
-    else if window.attachEvent
-      document.documentElement.fakeEvents++;
     else if document.createEventObject
       event = document.createEventObject()
       event.data = data if data
-      document.fireEvent "on" + name, event
+      try
+        document.fireEvent "on" + name, event
 
   #
   # Happens from time to time during downloading (but only when localStorage caching enabled)
@@ -113,7 +111,7 @@
 
 @SprocketsPreload.onload ->
   if SprocketsPreload.inline
-    delete localStorage['sprockets-preload'] if window.localStorage?
+    delete localStorage['sprockets-preload'] if window.localStorage? && localStorage['sprockets-preload']
     SprocketsPreload.triggerProgress 100
     SprocketsPreload.triggerSuccess()
   else if SprocketsPreload.localStorage && window.localStorage
